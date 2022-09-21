@@ -19,48 +19,26 @@ int main() {
     
     int nVotosNulos = 0;
     
-    int voto;
-    
-    
     //Ler Votos
-    printf("Digite o voto do eleitor 1! ");
-    scanf("%d",&voto);
-    if(voto == 1){
-        nVotosCandidato1++;
-    }else if(voto == 2){
-        nVotosCandidato2++;
-    }else if(voto == 3){
-        nVotosCandidato3++;
-    }else{
-        nVotosNulos++;
+    int nEleitores;
+    printf("Digite o número de eleitores:");
+    scanf("%d",&nEleitores);
+    
+    int voto;
+    for(int i=0; i<nEleitores; i++){
+        printf("Digite o voto do eleitor %d! ",(i+1));
+        scanf("%d",&voto);
+        if(voto == 1){
+            nVotosCandidato1++;
+        }else if(voto == 2){
+            nVotosCandidato2++;
+        }else if(voto == 3){
+            nVotosCandidato3++;
+        }else{
+            nVotosNulos++;
+        }        
     }
-    
-    
-    
-    printf("Digite o voto do eleitor 2! ");
-    scanf("%d",&voto);
-    if(voto == 1){
-        nVotosCandidato1++;
-    }else if(voto == 2){
-        nVotosCandidato2++;
-    }else if(voto == 3){
-        nVotosCandidato3++;
-    }else{
-        nVotosNulos++;
-    }
-    
-    printf("Digite o voto do eleitor 3! ");
-    scanf("%d",&voto);
-    if(voto == 1){
-        nVotosCandidato1++;
-    }else if(voto == 2){
-        nVotosCandidato2++;
-    }else if(voto == 3){
-        nVotosCandidato3++;
-    }else{
-        nVotosNulos++;
-    }
-    
+        
     
     //Apurar votação
     printf("Votos Nulos: %d\n",nVotosNulos);
