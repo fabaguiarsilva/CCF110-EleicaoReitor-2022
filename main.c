@@ -41,28 +41,35 @@ int main() {
         
     
     //Apurar votação
-    printf("Votos Nulos: %d\n",nVotosNulos);
-    if(nVotosCandidato1 > nVotosCandidato2
-       && nVotosCandidato1 > nVotosCandidato3){
-        printf("Candidato 1 é o vencedor com %d "
-                "voto(s)",nVotosCandidato1);        
-    }else if(nVotosCandidato2 > nVotosCandidato1
-       && nVotosCandidato2 > nVotosCandidato3){
-        printf("Candidato 2 é o vencedor com %d "
-                "voto(s)",nVotosCandidato2);               
-    }else if(nVotosCandidato3 > nVotosCandidato1
-       && nVotosCandidato3 > nVotosCandidato2){
-        printf("Candidato 3 é o vencedor com %d "
-                "voto(s)",nVotosCandidato3);                       
-    }else{
-        printf("Empate! Repita a votação!");
+    
+    int candidatoMaisVotos = 1;
+    int nMaisVotos = nVotosCandidato1;
+    int empate = 0; // 1: empate, 0: sem empate
+    
+    if(nVotosCandidato2 > nMaisVotos){
+        nMaisVotos = nVotosCandidato2;
+        candidatoMaisVotos=2;
+        empate = 0;
+    }else if(nVotosCandidato2 == nMaisVotos){
+        empate = 1;
     }
     
+    if(nVotosCandidato3 > nMaisVotos){
+        nMaisVotos = nVotosCandidato3;
+        candidatoMaisVotos=3;
+        empate = 0;
+    }else if(nVotosCandidato3 == nMaisVotos){
+        empate = 1;
+    }
+
     
-    
-    
-    
-    
+    printf("Votos Nulos: %d\n",nVotosNulos);
+    if(empate == 0){
+        printf("Candidato %d é vencedor com %d votos",
+            candidatoMaisVotos, nMaisVotos);
+    }else{
+        printf("Empate!");
+    }
     
     return (EXIT_SUCCESS);
 }
