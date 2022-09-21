@@ -17,6 +17,8 @@ int main() {
         nVotosCandidato2 = 0,
         nVotosCandidato3 = 0;
     
+    int nVotosNulos = 0;
+    
     int voto;
     
     
@@ -29,6 +31,8 @@ int main() {
         nVotosCandidato2++;
     }else if(voto == 3){
         nVotosCandidato3++;
+    }else{
+        nVotosNulos++;
     }
     
     
@@ -41,6 +45,8 @@ int main() {
         nVotosCandidato2++;
     }else if(voto == 3){
         nVotosCandidato3++;
+    }else{
+        nVotosNulos++;
     }
     
     printf("Digite o voto do eleitor 3! ");
@@ -51,10 +57,13 @@ int main() {
         nVotosCandidato2++;
     }else if(voto == 3){
         nVotosCandidato3++;
-    }  
+    }else{
+        nVotosNulos++;
+    }
     
     
     //Apurar votação
+    printf("Votos Nulos: %d\n",nVotosNulos);
     if(nVotosCandidato1 > nVotosCandidato2
        && nVotosCandidato1 > nVotosCandidato3){
         printf("Candidato 1 é o vencedor com %d "
@@ -67,6 +76,8 @@ int main() {
        && nVotosCandidato3 > nVotosCandidato2){
         printf("Candidato 3 é o vencedor com %d "
                 "voto(s)",nVotosCandidato3);                       
+    }else{
+        printf("Empate! Repita a votação!");
     }
     
     
