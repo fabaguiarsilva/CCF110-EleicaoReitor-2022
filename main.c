@@ -7,29 +7,43 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 /*
  * 
  */
 int main() {
 
-    int nCandidatos = 3;
+    int nCandidatos = 3;    
     
-    /*
-    int numCandidatos[nCandidatos];
-    numCandidatos[0] = 1;
-    numCandidatos[1] = 5;
-    numCandidatos[2] = 7;
-    */
+    int numCandidatos[nCandidatos];    
+    //int numCandidatos[] = {1,2,3};
     
-    int numCandidatos[] = {1,2,3};
-
     int votosCandidatos[nCandidatos];
     for(int i=0; i<nCandidatos; i++){
         votosCandidatos[i]=0;
     }
+
+    char nomeCandidato1[30];
+    char nomeCandidato2[30];
+    char nomeCandidato3[30];
     
     int nVotosNulos = 0;
+    
+    //Ler dados dos candidatos
+    for(int i=0; i<nCandidatos; i++){
+        printf("Digite numero candidato %d: ",(i+1));
+        scanf("%d",&numCandidatos[i]);
+        
+        printf("Digite nome candidato %d: ",(i+1));
+        if(i==0){
+            scanf("%s",&nomeCandidato1);
+        }else if(i == 1){
+            scanf("%s",&nomeCandidato2);
+        }else if(i == 2){
+            scanf("%s",&nomeCandidato3);
+        }
+    }
     
     //Ler Votos
     int nEleitores;
@@ -74,7 +88,19 @@ int main() {
     
     printf("Votos Nulos: %d\n",nVotosNulos);
     if(empate == 0){
-        printf("Candidato %d é vencedor com %d votos",
+        
+        char nomeVencedor[30];
+        
+        if(indiceVencedor == 0){
+            strcpy(nomeVencedor, nomeCandidato1);
+        }else if(indiceVencedor == 1){
+            strcpy(nomeVencedor, nomeCandidato2);
+        }else if(indiceVencedor == 2){
+            strcpy(nomeVencedor, nomeCandidato3);
+        }
+        
+        printf("Candidato %s (%d) é vencedor com %d votos",
+            nomeVencedor,  
             numCandidatos[indiceVencedor], 
             votosCandidatos[indiceVencedor]);
     }else{
