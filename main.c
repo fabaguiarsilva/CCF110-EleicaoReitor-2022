@@ -24,9 +24,10 @@ int main() {
         votosCandidatos[i]=0;
     }
 
-    char nomeCandidato1[30];
-    char nomeCandidato2[30];
-    char nomeCandidato3[30];
+    int tamanhoNomes = 30;
+    char nomeCandidato1[tamanhoNomes];
+    char nomeCandidato2[tamanhoNomes];
+    char nomeCandidato3[tamanhoNomes];
     
     int nVotosNulos = 0;
     
@@ -36,12 +37,16 @@ int main() {
         scanf("%d",&numCandidatos[i]);
         
         printf("Digite nome candidato %d: ",(i+1));
+        fflush(stdin);
         if(i==0){
-            scanf("%s",&nomeCandidato1);
+            //scanf("%s",&nomeCandidato1);
+            gets(nomeCandidato1);
         }else if(i == 1){
-            scanf("%s",&nomeCandidato2);
+            //scanf("%s",&nomeCandidato2);
+            gets(nomeCandidato2);            
         }else if(i == 2){
-            scanf("%s",&nomeCandidato3);
+            //scanf("%s",&nomeCandidato3);
+            gets(nomeCandidato3);            
         }
     }
     
@@ -89,7 +94,7 @@ int main() {
     printf("Votos Nulos: %d\n",nVotosNulos);
     if(empate == 0){
         
-        char nomeVencedor[30];
+        char nomeVencedor[tamanhoNomes];
         
         if(indiceVencedor == 0){
             strcpy(nomeVencedor, nomeCandidato1);
