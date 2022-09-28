@@ -13,9 +13,21 @@
  */
 int main() {
 
-    int nVotosCandidato1 = 0,
-        nVotosCandidato2 = 0,
-        nVotosCandidato3 = 0;
+    int nCandidatos = 3;
+    
+    /*
+    int numCandidatos[nCandidatos];
+    numCandidatos[0] = 1;
+    numCandidatos[1] = 5;
+    numCandidatos[2] = 7;
+    */
+    
+    int numCandidatos[] = {1,2,3};
+
+    int votosCandidatos[nCandidatos];
+    for(int i=0; i<nCandidatos; i++){
+        votosCandidatos[i]=0;
+    }
     
     int nVotosNulos = 0;
     
@@ -28,45 +40,43 @@ int main() {
     for(int i=0; i<nEleitores; i++){
         printf("Digite o voto do eleitor %d! ",(i+1));
         scanf("%d",&voto);
-        if(voto == 1){
-            nVotosCandidato1++;
-        }else if(voto == 2){
-            nVotosCandidato2++;
-        }else if(voto == 3){
-            nVotosCandidato3++;
-        }else{
+        
+        int flagNulo = 1;
+        
+        for(int j=0; j<nCandidatos; j++){
+            if(voto == numCandidatos[j]){
+                votosCandidatos[j]++;
+                flagNulo = 0;
+            }
+        }
+        
+        if(flagNulo == 1){
             nVotosNulos++;
-        }        
+        }
     }
         
     
-    //Apurar votação
-    
-    int candidatoMaisVotos = 1;
-    int nMaisVotos = nVotosCandidato1;
+    //Apurar votação    
+    int indiceVencedor = 0;
     int empate = 0; // 1: empate, 0: sem empate
     
-    if(nVotosCandidato2 > nMaisVotos){
-        nMaisVotos = nVotosCandidato2;
-        candidatoMaisVotos=2;
-        empate = 0;
-    }else if(nVotosCandidato2 == nMaisVotos){
-        empate = 1;
-    }
-    
-    if(nVotosCandidato3 > nMaisVotos){
-        nMaisVotos = nVotosCandidato3;
-        candidatoMaisVotos=3;
-        empate = 0;
-    }else if(nVotosCandidato3 == nMaisVotos){
-        empate = 1;
+    for(int i=1; i<nCandidatos; i++){
+        if(votosCandidatos[i] > 
+                votosCandidatos[indiceVencedor]){
+            indiceVencedor = i;
+            empate = 0;
+        }else if(votosCandidatos[i] == 
+                votosCandidatos[indiceVencedor]){
+            empate = 1;
+        }
     }
 
     
     printf("Votos Nulos: %d\n",nVotosNulos);
     if(empate == 0){
         printf("Candidato %d é vencedor com %d votos",
-            candidatoMaisVotos, nMaisVotos);
+            numCandidatos[indiceVencedor], 
+            votosCandidatos[indiceVencedor]);
     }else{
         printf("Empate!");
     }
