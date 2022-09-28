@@ -14,6 +14,8 @@
  */
 int main() {
 
+    int FLAG_TESTE = 1;
+    
     int nCandidatos = 3;    
     
     int numCandidatos[nCandidatos];    
@@ -32,21 +34,34 @@ int main() {
     int nVotosNulos = 0;
     
     //Ler dados dos candidatos
+    
+    if(FLAG_TESTE == 1){
+        strcpy(nomeCandidato1,"Candidato 1");
+        strcpy(nomeCandidato2,"Candidato 2");
+        strcpy(nomeCandidato3,"Candidato 3");
+    }
+    
     for(int i=0; i<nCandidatos; i++){
-        printf("Digite numero candidato %d: ",(i+1));
-        scanf("%d",&numCandidatos[i]);
         
-        printf("Digite nome candidato %d: ",(i+1));
-        fflush(stdin);
-        if(i==0){
-            //scanf("%s",&nomeCandidato1);
-            gets(nomeCandidato1);
-        }else if(i == 1){
-            //scanf("%s",&nomeCandidato2);
-            gets(nomeCandidato2);            
-        }else if(i == 2){
-            //scanf("%s",&nomeCandidato3);
-            gets(nomeCandidato3);            
+        if(FLAG_TESTE == 1){            
+            numCandidatos[i] = i+1;            
+        }else{
+        
+            printf("Digite numero candidato %d: ",(i+1));
+            scanf("%d",&numCandidatos[i]);
+        
+            printf("Digite nome candidato %d: ",(i+1));
+            fflush(stdin);
+            if(i==0){
+                //scanf("%s",&nomeCandidato1);
+                gets(nomeCandidato1);
+            }else if(i == 1){
+                //scanf("%s",&nomeCandidato2);
+                gets(nomeCandidato2);            
+            }else if(i == 2){
+                //scanf("%s",&nomeCandidato3);
+                gets(nomeCandidato3);            
+            }
         }
     }
     
