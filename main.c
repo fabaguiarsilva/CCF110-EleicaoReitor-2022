@@ -27,24 +27,19 @@ int main() {
     }
 
     int tamanhoNomes = 30;
-    char nomeCandidato1[tamanhoNomes];
-    char nomeCandidato2[tamanhoNomes];
-    char nomeCandidato3[tamanhoNomes];
+    char nomesCandidatos[nCandidatos][tamanhoNomes];
     
     int nVotosNulos = 0;
     
     //Ler dados dos candidatos
-    
-    if(FLAG_TESTE == 1){
-        strcpy(nomeCandidato1,"Candidato 1");
-        strcpy(nomeCandidato2,"Candidato 2");
-        strcpy(nomeCandidato3,"Candidato 3");
-    }
-    
     for(int i=0; i<nCandidatos; i++){
         
         if(FLAG_TESTE == 1){            
-            numCandidatos[i] = i+1;            
+            numCandidatos[i] = i+1;  
+            //TODO
+            char num[3];
+            sprintf(num, "%d", (i+1));
+            strcat(strcpy(nomesCandidatos[i], "Candidato "), num);
         }else{
         
             printf("Digite numero candidato %d: ",(i+1));
@@ -52,16 +47,7 @@ int main() {
         
             printf("Digite nome candidato %d: ",(i+1));
             fflush(stdin);
-            if(i==0){
-                //scanf("%s",&nomeCandidato1);
-                gets(nomeCandidato1);
-            }else if(i == 1){
-                //scanf("%s",&nomeCandidato2);
-                gets(nomeCandidato2);            
-            }else if(i == 2){
-                //scanf("%s",&nomeCandidato3);
-                gets(nomeCandidato3);            
-            }
+            gets(nomesCandidatos[i]);
         }
     }
     
@@ -108,19 +94,9 @@ int main() {
     
     printf("Votos Nulos: %d\n",nVotosNulos);
     if(empate == 0){
-        
-        char nomeVencedor[tamanhoNomes];
-        
-        if(indiceVencedor == 0){
-            strcpy(nomeVencedor, nomeCandidato1);
-        }else if(indiceVencedor == 1){
-            strcpy(nomeVencedor, nomeCandidato2);
-        }else if(indiceVencedor == 2){
-            strcpy(nomeVencedor, nomeCandidato3);
-        }
-        
+               
         printf("Candidato %s (%d) é vencedor com %d votos",
-            nomeVencedor,  
+            nomesCandidatos[indiceVencedor],  
             numCandidatos[indiceVencedor], 
             votosCandidatos[indiceVencedor]);
     }else{
@@ -129,4 +105,3 @@ int main() {
     
     return (EXIT_SUCCESS);
 }
-
