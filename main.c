@@ -14,9 +14,15 @@
  */
 int main() {
 
-    int FLAG_TESTE = 1;
-    
-    int nCandidatos = 3;    
+    int FLAG_TESTE = 0;
+        
+    int nCandidatos;
+    if(FLAG_TESTE == 1){
+        nCandidatos = 3;
+    }else{
+        printf("Digite o número de candidatos: ");
+        scanf("%d",&nCandidatos);
+    }
     
     int numCandidatos[nCandidatos];    
     //int numCandidatos[] = {1,2,3};
