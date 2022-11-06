@@ -9,9 +9,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-/*
- * 
- */
 int main() {
 
     int FLAG_TESTE = 0;
