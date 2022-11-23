@@ -8,11 +8,46 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "candidato.h"
+
+int lerNumeroCandidatos();
+void zeraVotos(int n, candidato candidatos[]);
+void lerDadosCandidatos(int nCandidatos, candidato candidatos[]);
+void lerVotos(int nCandidatos, candidato candidatos[], int *nNulos);
+void apuracao(int nCandidatos, candidato candidatos[], 
+                    int *iVencedor,int *isEmpate);
+void mostrarResultado(int votosNulos, int empate, 
+        candidato vencedor);
+
+int FLAG_TESTE = 0;
 
 int main() {
-
-    int FLAG_TESTE = 0;
         
+    int nCandidatos = lerNumeroCandidatos();
+    int nVotosNulos = 0;
+    
+    candidato candidatos[nCandidatos];
+    
+    zeraVotos(nCandidatos, candidatos);
+ 
+    //Ler dados dos candidatos
+    lerDadosCandidatos(nCandidatos, candidatos);
+    
+    lerVotos(nCandidatos, candidatos, &nVotosNulos);
+        
+    
+    //Apurar votação    
+    int indiceVencedor = 0;
+    int empate = 0; // 1: empate, 0: sem empate
+    apuracao(nCandidatos, candidatos, &indiceVencedor, &empate);
+
+    mostrarResultado(nVotosNulos, empate, candidatos[indiceVencedor]);
+    
+    return (EXIT_SUCCESS);
+}
+
+
+int lerNumeroCandidatos(){
     int nCandidatos;
     if(FLAG_TESTE == 1){
         nCandidatos = 3;
@@ -20,40 +55,38 @@ int main() {
         printf("Digite o número de candidatos: ");
         scanf("%d",&nCandidatos);
     }
-    
-    int numCandidatos[nCandidatos];    
-    //int numCandidatos[] = {1,2,3};
-    
-    int votosCandidatos[nCandidatos];
-    for(int i=0; i<nCandidatos; i++){
-        votosCandidatos[i]=0;
-    }
+    return nCandidatos;    
+}
 
-    int tamanhoNomes = 30;
-    char nomesCandidatos[nCandidatos][tamanhoNomes];
-    
-    int nVotosNulos = 0;
-    
-    //Ler dados dos candidatos
+void zeraVotos(int n, candidato candidatos[]){
+   for(int i=0; i<n; i++){
+        candidatos[i].nVotos=0;
+   }    
+}
+
+void lerDadosCandidatos(int nCandidatos, candidato candidatos[]){
     for(int i=0; i<nCandidatos; i++){
         
         if(FLAG_TESTE == 1){            
-            numCandidatos[i] = i+1;  
+            candidatos[i].numero = i+1;  
             //TODO
             char num[3];
             sprintf(num, "%d", (i+1));
-            strcat(strcpy(nomesCandidatos[i], "Candidato "), num);
+            strcat(strcpy(candidatos[i].nome, "Candidato "), num);
         }else{
         
             printf("Digite numero candidato %d: ",(i+1));
-            scanf("%d",&numCandidatos[i]);
-        
+            scanf("%d",&candidatos[i].numero);
+            //fflush(stdin);
+            getchar();
+            
             printf("Digite nome candidato %d: ",(i+1));
-            fflush(stdin);
-            gets(nomesCandidatos[i]);
+            gets(candidatos[i].nome);
         }
-    }
-    
+    }    
+}
+
+void lerVotos(int nCandidatos, candidato candidatos[], int *nNulos){
     //Ler Votos
     int nEleitores;
     printf("Digite o número de eleitores:");
@@ -67,44 +100,44 @@ int main() {
         int flagNulo = 1;
         
         for(int j=0; j<nCandidatos; j++){
-            if(voto == numCandidatos[j]){
-                votosCandidatos[j]++;
+            if(voto == candidatos[j].numero){
+                candidatos[j].nVotos++;
                 flagNulo = 0;
             }
         }
         
         if(flagNulo == 1){
-            nVotosNulos++;
+            (*nNulos)++;
         }
-    }
-        
-    
-    //Apurar votação    
-    int indiceVencedor = 0;
-    int empate = 0; // 1: empate, 0: sem empate
+    }    
+}
+
+void apuracao(int nCandidatos, candidato candidatos[], 
+                    int *iVencedor,int *isEmpate){
     
     for(int i=1; i<nCandidatos; i++){
-        if(votosCandidatos[i] > 
-                votosCandidatos[indiceVencedor]){
-            indiceVencedor = i;
-            empate = 0;
-        }else if(votosCandidatos[i] == 
-                votosCandidatos[indiceVencedor]){
-            empate = 1;
+        if(candidatos[i].nVotos > 
+                candidatos[*iVencedor].nVotos){
+            *iVencedor = i;
+            *isEmpate = 0;
+        }else if(candidatos[i].nVotos == 
+                candidatos[*iVencedor].nVotos){
+            *isEmpate = 1;
         }
-    }
+    }    
+}
 
-    
-    printf("Votos Nulos: %d\n",nVotosNulos);
+void mostrarResultado(int votosNulos, int empate, 
+        candidato vencedor){
+    printf("Votos Nulos: %d\n",votosNulos);
     if(empate == 0){
                
         printf("Candidato %s (%d) é vencedor com %d votos",
-            nomesCandidatos[indiceVencedor],  
-            numCandidatos[indiceVencedor], 
-            votosCandidatos[indiceVencedor]);
+            vencedor.nome,  
+            vencedor.numero, 
+            vencedor.nVotos);
     }else{
         printf("Empate!");
-    }
-    
-    return (EXIT_SUCCESS);
+    }    
 }
+
