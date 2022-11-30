@@ -1,0 +1,5 @@
+Eleicoes Reitor UFV
+Nulos: 0
+Candidato: Candidato1 (1) teve 0 votos
+Candidato: Candidato2 (2) teve 3 votos
+Candidato: Candidato3 (3) teve 0 votos

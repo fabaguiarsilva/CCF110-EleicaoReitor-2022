@@ -13,11 +13,13 @@
 int lerNumeroCandidatos();
 void zeraVotos(int n, candidato candidatos[]);
 void lerDadosCandidatos(int nCandidatos, candidato candidatos[]);
+void lerDadosCandidatosArquivo(int nCandidatos, candidato candidatos[]);
 void lerVotos(int nCandidatos, candidato candidatos[], int *nNulos);
 void apuracao(int nCandidatos, candidato candidatos[], 
                     int *iVencedor,int *isEmpate);
 void mostrarResultado(int votosNulos, int empate, 
         candidato vencedor);
+void relatorioEleicao(int votosNulos, int empate, int nCandidatos, candidato candidatos[]);
 
 int FLAG_TESTE = 0;
 
@@ -31,7 +33,8 @@ int main() {
     zeraVotos(nCandidatos, candidatos);
  
     //Ler dados dos candidatos
-    lerDadosCandidatos(nCandidatos, candidatos);
+    //lerDadosCandidatos(nCandidatos, candidatos);
+    lerDadosCandidatosArquivo(nCandidatos, candidatos);
     
     lerVotos(nCandidatos, candidatos, &nVotosNulos);
         
@@ -42,6 +45,8 @@ int main() {
     apuracao(nCandidatos, candidatos, &indiceVencedor, &empate);
 
     mostrarResultado(nVotosNulos, empate, candidatos[indiceVencedor]);
+    
+    relatorioEleicao(nVotosNulos, empate, nCandidatos, candidatos);
     
     return (EXIT_SUCCESS);
 }
@@ -62,6 +67,25 @@ void zeraVotos(int n, candidato candidatos[]){
    for(int i=0; i<n; i++){
         candidatos[i].nVotos=0;
    }    
+}
+
+void lerDadosCandidatosArquivo(int nCandidatos, candidato candidatos[]){
+    FILE *arquivoCandidatos;
+    if((arquivoCandidatos = fopen("candidatos.txt","r")) == NULL){
+        printf("Erro ao abrir arquivo. Leitura manual.");
+        lerDadosCandidatos(nCandidatos, candidatos);
+    }else{
+        int numero;
+        char nome[30];
+        int i=0;
+        while(!feof(arquivoCandidatos)){
+            fscanf(arquivoCandidatos,"%[A-Za-z0-9];%d;\n",&candidatos[i].nome,&candidatos[i].numero);
+            printf("Nome: %s - Num: %d\n",candidatos[i].nome,candidatos[i].numero);
+            i++;
+        }
+    }
+    
+    fclose(arquivoCandidatos);
 }
 
 void lerDadosCandidatos(int nCandidatos, candidato candidatos[]){
@@ -139,5 +163,24 @@ void mostrarResultado(int votosNulos, int empate,
     }else{
         printf("Empate!");
     }    
+}
+
+void relatorioEleicao(int votosNulos, int empate, int nCandidatos, candidato candidatos[]){
+    
+    FILE *arquivoRelatorio;
+    if((arquivoRelatorio = fopen("relatorio.txt","w")) == NULL){
+        printf("erro ao abrir arquivo");
+        return;
+    }
+    
+    fprintf(arquivoRelatorio, "Eleicoes Reitor UFV\n");
+    fprintf(arquivoRelatorio, "Nulos: %d\n",votosNulos);
+    
+    for(int i=0; i<nCandidatos; i++){
+        fprintf(arquivoRelatorio, "Candidato: %s (%d) teve %d votos\n",
+                candidatos[i].nome, candidatos[i].numero, candidatos[i].nVotos);
+    }
+    
+    fclose(arquivoRelatorio);       
 }
 

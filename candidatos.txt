@@ -1,0 +1,3 @@
+Candidato1;1;
+Candidato2;2;
+Candidato3;3;
